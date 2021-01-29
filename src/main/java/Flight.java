@@ -67,7 +67,7 @@ public class Flight {
     }
 
     public int getAvailableSeats(){
-        int availableSeats = this.plane.getPlane().getCapacity() - this.passengers.size();
+        int availableSeats = this.plane.getPlaneType().getCapacity() - this.passengers.size();
         return availableSeats;
     }
 

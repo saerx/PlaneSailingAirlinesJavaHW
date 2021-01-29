@@ -7,7 +7,7 @@ public class Plane {
         this.typeOfPlane = typeOfPlane;
     }
 
-    public PlaneType getPlane() {
+    public PlaneType getPlaneType() {
         return typeOfPlane;
     }
 
