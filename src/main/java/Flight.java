@@ -63,4 +63,28 @@ public class Flight {
         passenger.setSeatNumber(n);
         this.passengers.add(passenger);
     }
+
+    public void sort(){
+        for (Passenger passenger : this.passengers) {
+            int i = this.passengers.indexOf(passenger);
+            Passenger nextPassenger = this.passengers.get(i+1);
+            if (nextPassenger.getSeatNumber() < passenger.getSeatNumber()) {
+
+            }
+        }
+    }
+
+    public void sortPassengers() {
+        int n = this.passengers.size();
+        for (int i = 0; i < n -1; i++) {
+            for (int j = 0; j < n-i-1; j++){
+                if (this.passengers.get(j).getSeatNumber() > this.passengers.get(j+1).getSeatNumber()) {
+                    Passenger temp = this.passengers.get(j);
+                    Passenger next = this.passengers.get(j+1);
+                    this.passengers.set(j, next);
+                    this.passengers.set(j+1, temp);
+                }
+            }
+        }
+    }
 }

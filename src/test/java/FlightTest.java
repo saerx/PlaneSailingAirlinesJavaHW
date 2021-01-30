@@ -1,3 +1,4 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +12,9 @@ public class FlightTest {
     private Flight flight;
     private Passenger passenger;
     private Passenger passenger2;
+    private Passenger passenger3;
     private LocalDate xmasDay;
+
 
     @Before
     public void before(){
@@ -20,6 +23,8 @@ public class FlightTest {
         flight = new Flight(boeing,"FR756", "GLA", "DUB", xmasDay);
         passenger = new Passenger("Bob Loxley", 2);
         passenger2 = new Passenger("Rob Thomas", 3);
+        passenger3 = new Passenger("Robbie Williams", 1);
+        passenger4 = new Passenger("Robert E. Williams", 1);
     }
 
     @Test
@@ -56,6 +61,7 @@ public class FlightTest {
     public void canBookPassenger(){
         flight.bookPassenger(passenger);
         assertEquals(1, flight.getPassengers().size());
+        assertEquals(passenger, flight.getPassengers().get(0));
         assertEquals(139, flight.getAvailableSeats());
         assertEquals("FR756", passenger.getFlight());
         assertNotNull(passenger.getSeatNumber());
@@ -67,5 +73,25 @@ public class FlightTest {
         flight.bookPassenger(passenger2);
         assertNotEquals(passenger.getSeatNumber(), passenger2.getSeatNumber());
     }
+
+    @Test
+    public void passengersAreSortedBySeatNumbers(){
+        Boolean sortState = false;
+        flight.bookPassenger(passenger);
+        flight.bookPassenger(passenger2);
+        flight.bookPassenger(passenger3);
+        flight.sortPassengers();
+        int passengerOneSeatNum = flight.getPassengers().get(0).getSeatNumber();
+        int passengerTwoSeatNum = flight.getPassengers().get(1).getSeatNumber();
+        int passengerThreeSeatNum = flight.getPassengers().get(2).getSeatNumber();
+        if ( passengerOneSeatNum < passengerTwoSeatNum && passengerTwoSeatNum < passengerThreeSeatNum) {
+            sortState = true;
+        }
+        assertTrue(sortState);
+
+    }
+
+
+
 
 }
