@@ -64,15 +64,6 @@ public class Flight {
         this.passengers.add(passenger);
     }
 
-    public void sort(){
-        for (Passenger passenger : this.passengers) {
-            int i = this.passengers.indexOf(passenger);
-            Passenger nextPassenger = this.passengers.get(i+1);
-            if (nextPassenger.getSeatNumber() < passenger.getSeatNumber()) {
-
-            }
-        }
-    }
 
     public void sortPassengers() {
         int n = this.passengers.size();
@@ -86,5 +77,29 @@ public class Flight {
                 }
             }
         }
+    }
+
+    public Passenger findBySeatNumber(int seatNumber) {
+        int lowIndex = 0;
+        int highIndex = this.passengers.size()-1;
+
+        int passengerIndex = -1;
+        Passenger passengerToReturn = null;
+
+        while (lowIndex <= highIndex) {
+            int midIndex = (lowIndex + highIndex) / 2;
+            if (seatNumber == this.passengers.get(midIndex).getSeatNumber()) {
+                passengerIndex = midIndex;
+                break;
+            } else if (seatNumber < this.passengers.get(midIndex).getSeatNumber()) {
+                highIndex = midIndex-1;
+            } else if (seatNumber > this.passengers.get(midIndex).getSeatNumber()) {
+                lowIndex = midIndex+1;
+            }
+        }
+        if (passengerIndex >= 0) {
+            passengerToReturn = this.passengers.get(passengerIndex);
+        }
+        return passengerToReturn;
     }
 }

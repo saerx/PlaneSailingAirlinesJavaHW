@@ -13,6 +13,7 @@ public class FlightTest {
     private Passenger passenger;
     private Passenger passenger2;
     private Passenger passenger3;
+    private Passenger passenger4;
     private LocalDate xmasDay;
 
 
@@ -24,7 +25,7 @@ public class FlightTest {
         passenger = new Passenger("Bob Loxley", 2);
         passenger2 = new Passenger("Rob Thomas", 3);
         passenger3 = new Passenger("Robbie Williams", 1);
-        passenger4 = new Passenger("Robert E. Williams", 1);
+        passenger4 = new Passenger("Carlos Santana", 4);
     }
 
     @Test
@@ -80,17 +81,37 @@ public class FlightTest {
         flight.bookPassenger(passenger);
         flight.bookPassenger(passenger2);
         flight.bookPassenger(passenger3);
+        flight.bookPassenger(passenger4);
         flight.sortPassengers();
         int passengerOneSeatNum = flight.getPassengers().get(0).getSeatNumber();
         int passengerTwoSeatNum = flight.getPassengers().get(1).getSeatNumber();
         int passengerThreeSeatNum = flight.getPassengers().get(2).getSeatNumber();
-        if ( passengerOneSeatNum < passengerTwoSeatNum && passengerTwoSeatNum < passengerThreeSeatNum) {
+        int passengerFourSeatNum = flight.getPassengers().get(3).getSeatNumber();
+        if ( passengerOneSeatNum < passengerTwoSeatNum && passengerTwoSeatNum < passengerThreeSeatNum && passengerThreeSeatNum < passengerFourSeatNum) {
             sortState = true;
         }
         assertTrue(sortState);
 
     }
 
+    @Test
+    public void canFindPassengerBySeatNumber(){
+        flight.bookPassenger(passenger);
+        flight.bookPassenger(passenger2);
+        flight.bookPassenger(passenger3);
+        flight.bookPassenger(passenger4);
+        flight.sortPassengers();
+
+        int thirdSeatNum = flight.getPassengers().get(2).getSeatNumber();
+        Passenger foundPassenger = flight.findBySeatNumber(thirdSeatNum);
+        assertEquals(flight.getPassengers().get(2).getName(), foundPassenger.getName());
+
+    }
+
+    @Test
+    public void returnsNullIfNoPassengerInSeat(){
+        assertNull(flight.findBySeatNumber(120));
+    }
 
 
 
