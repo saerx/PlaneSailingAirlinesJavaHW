@@ -1,4 +1,6 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Flight {
 
@@ -7,63 +9,41 @@ public class Flight {
     private String flightDesignator;
     private String destinationAirport;
     private String departureAirport;
-    private String departureTime;
+    private LocalDate departureTime;
+    private Random rand;
 
-    public Flight(Plane plane, String flightDesignator, String destinationAirport, String departureAirport, String departureTime) {
+    public Flight(Plane plane, String flightDesignator, String destinationAirport, String departureAirport, LocalDate departureTime) {
         this.plane = plane;
         this.flightDesignator = flightDesignator;
         this.destinationAirport = destinationAirport;
         this.departureAirport = departureAirport;
         this.departureTime = departureTime;
         this.passengers = new ArrayList<>();
+
     }
 
     public ArrayList<Passenger> getPassengers() {
         return passengers;
     }
 
-    public void setPassengers(ArrayList<Passenger> passengers) {
-        this.passengers = passengers;
-    }
-
     public Plane getPlane() {
         return plane;
-    }
-
-    public void setPlane(Plane plane) {
-        this.plane = plane;
     }
 
     public String getFlightDesignator() {
         return flightDesignator;
     }
 
-    public void setFlightDesignator(String flightDesignator) {
-        this.flightDesignator = flightDesignator;
-    }
-
     public String getDestinationAirport() {
         return destinationAirport;
-    }
-
-    public void setDestinationAirport(String destinationAirport) {
-        this.destinationAirport = destinationAirport;
     }
 
     public String getDepartureAirport() {
         return departureAirport;
     }
 
-    public void setDepartureAirport(String departureAirport) {
-        this.departureAirport = departureAirport;
-    }
-
-    public String getDepartureTime() {
+    public LocalDate getDepartureTime() {
         return departureTime;
-    }
-
-    public void setDepartureTime(String departureTime) {
-        this.departureTime = departureTime;
     }
 
     public int getAvailableSeats(){
@@ -72,6 +52,15 @@ public class Flight {
     }
 
     public void bookPassenger(Passenger passenger) {
+        rand = new Random();
+        int n = rand.nextInt(plane.getPlaneType().getCapacity()) + 1 ;
+        passenger.setFlight(this.flightDesignator);
+        for (Passenger otherPassenger : this.passengers) {
+            if (otherPassenger.getSeatNumber() == n) {
+                n = rand.nextInt(plane.getPlaneType().getCapacity()) + 1;
+            }
+        }
+        passenger.setSeatNumber(n);
         this.passengers.add(passenger);
     }
 }
